@@ -1,0 +1,146 @@
+# -----------------------------------------------------------------------------
+# Core Data Engineering
+# -----------------------------------------------------------------------------
+lxml                  # HTML/XML parsing
+openpyxl              # Excel file support
+pandas                # Tabular data manipulation
+polars                # Fast, multi-threaded DataFrame engine
+pyarrow               # Columnar data format (Parquet/Feather)
+pyspark               # (Optional) Distributed ETL engine
+pyyaml                # Config parsing (YAML)
+scipy                 # Scientific computing utilities
+
+# -----------------------------------------------------------------------------
+# Databases and Storage
+# -----------------------------------------------------------------------------
+alembic               # Database migrations for SQLAlchemy
+kafka-python          # Kafka client for producers/consumers
+minio                 # S3-compatible object storage
+psycopg2-binary       # PostgreSQL connector (binary version recommended)
+redis                 # In-memory key/value store (cache, pub/sub)
+SQLAlchemy            # ORM and DB toolkit
+
+# -----------------------------------------------------------------------------
+# API Framework and ASGI Server
+# -----------------------------------------------------------------------------
+aiofiles              # Async file I/O
+aiohttp               # Async HTTP client/server
+fastapi[all]          # Web framework (includes uvicorn, pydantic, etc.)
+jinja2                # Templating engine (if rendering HTML)
+uvicorn               # ASGI server for FastAPI
+
+# -----------------------------------------------------------------------------
+# Authentication and Security
+# -----------------------------------------------------------------------------
+gitleaks-py           # Scan secrets in repos
+hvac                  # HashiCorp Vault client
+passlib[bcrypt]       # Secure password hashing
+pyotp                 # TOTP (2FA)
+python-jose[cryptography]  # JWT and token signing
+pyzbar                # Barcode/QR code decoder
+
+# -----------------------------------------------------------------------------
+# Data Modeling and Serialization
+# -----------------------------------------------------------------------------
+pydantic              # Data validation and serialization
+
+# -----------------------------------------------------------------------------
+# Logging and Monitoring
+# -----------------------------------------------------------------------------
+loguru                # Lightweight, powerful logger
+watchdog              # Filesystem monitoring (useful for dev/reload)
+
+# -----------------------------------------------------------------------------
+# Testing
+# -----------------------------------------------------------------------------
+Faker                 # Fake data generator (capitalize = correct PyPI package)
+factory_boy           # Fixture factory for test objects
+httpx                 # Async HTTP client (for testing APIs)
+pandera               # DataFrame schema validation
+pytest                # Core test framework
+pytest-asyncio        # Async test support
+pytest-cov            # Test coverage reporting
+pytest-mock           # Mocking support
+responses             # Mock HTTP requests
+
+# -----------------------------------------------------------------------------
+# Optional / Advanced Testing Tools
+# -----------------------------------------------------------------------------
+great_expectations    # Data validation/profiling (heavier tool)
+hypothesis            # Property-based fuzz testing
+testcontainers        # Spin up real containers in tests (DBs, S3, etc.)
+
+# -----------------------------------------------------------------------------
+# Workflow Orchestration
+# -----------------------------------------------------------------------------
+celery                # Task queue for background jobs
+prefect      # Modern ETL orchestration (pin version if on v2)
+
+# -----------------------------------------------------------------------------
+# Machine Learning and Model Management
+# -----------------------------------------------------------------------------
+catboost              # Gradient boosting (supports categorical vars)
+joblib                # Model serialization & parallelism
+lightgbm              # Fast boosting algorithm
+mlflow                # Experiment tracking and deployment
+optuna                # Hyperparameter optimization
+scikit-learn          # Core ML library
+xgboost               # Scalable, optimized gradient boosting
+
+# -----------------------------------------------------------------------------
+# PyTorch Ecosystem
+# -----------------------------------------------------------------------------
+pytorch-lightning     # High-level training loop abstraction
+torch                 # Core PyTorch
+torchmetrics          # Common evaluation metrics
+torchvision           # Image datasets/models/transforms
+
+# -----------------------------------------------------------------------------
+# Model Conversion and Runtime (ONNX)
+# -----------------------------------------------------------------------------
+onnx                  # ONNX model format
+onnxruntime           # ONNX inference runtime
+onnxmltools           # Convert models to ONNX
+skl2onnx              # Convert scikit-learn models to ONNX
+
+# -----------------------------------------------------------------------------
+# Natural Language Processing
+# -----------------------------------------------------------------------------
+huggingface_hub       # Model hub access
+spaCy                 # NLP pipeline and models
+trl                   # Transformers Reinforcement Learning
+
+# -----------------------------------------------------------------------------
+# Distributed and Parallel Computing
+# -----------------------------------------------------------------------------
+ray                   # Distributed computing, hyperparam search, model serving
+
+# -----------------------------------------------------------------------------
+# Visualization and Dashboards
+# -----------------------------------------------------------------------------
+matplotlib            # Traditional plotting
+plotly                # Interactive graphs
+seaborn               # Statistical visualizations
+streamlit             # Lightweight dashboards
+
+# -----------------------------------------------------------------------------
+# Web Scraping and Automation
+# -----------------------------------------------------------------------------
+beautifulsoup4        # HTML parsing
+scrapy                # Crawler framework
+selenium              # Headless browser automation for dynamic sites
+2captcha-python       # Captcha solving (MFA bypass)
+
+# -----------------------------------------------------------------------------
+# Image Processing and OCR
+# -----------------------------------------------------------------------------
+opencv-python         # Computer vision library
+pillow                # Image file support
+pytesseract           # OCR engine
+
+# -----------------------------------------------------------------------------
+# Development Tools
+# -----------------------------------------------------------------------------
+ipython               # Rich interactive Python shell
+jupyterlab            # Notebook environment
+notebook              # Jupyter Notebook classic
