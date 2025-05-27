@@ -1,0 +1,29 @@
+# Core ML libraries
+torch
+torchvision
+scikit-learn
+numpy
+pandas
+
+# Model export and serving
+onnx
+onnxruntime
+
+# Experiment tracking
+mlflow
+
+# Visualization and progress tracking
+matplotlib
+tqdm
+colorama
+loguru
+
+# Data validation and config
+pydantic
+
+# Optional (commented out unless you use them)
+# hydra-core
+# omegaconf
+
+# Jupyter Notebooks (optional if you do EDA or visualization inside notebooks)
+# notebook

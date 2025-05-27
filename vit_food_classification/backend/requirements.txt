@@ -1,0 +1,27 @@
+fastapi
+uvicorn[standard]
+
+# MLflow model loading
+mlflow
+pillow
+torch
+torchvision
+
+# Image preprocessing
+numpy
+scikit-learn
+
+# For base64 prediction and tensor ops
+python-multipart
+
+# Optional logging and styling
+loguru
+colorama
+
+# Optional database scaffold (not currently in use)
+sqlalchemy[asyncio]
+asyncpg
+
+# Optional Vault support
+hvac
+python-dotenv
