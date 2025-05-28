@@ -1,3 +1,48 @@
+"""
+main.py
+
+FastAPI application setup and configuration.
+
+This file contains the core setup for the FastAPI application, including middleware configurations,
+routes, and the integration of machine learning models via MLOps. The application is designed to handle
+API routes for file uploads, model predictions, and other necessary functionalities for AI-based services.
+
+Key Features:
+- **Model Loading**: On startup, the application loads a machine learning model from MLflow and attaches it
+  to the app's state for inference.
+- **API Endpoints**: Includes routes for uploading data, making predictions, and handling errors.
+- **CORS and Session Management**: Configures middleware for handling CORS and session management securely.
+- **Static File Serving**: Configures serving of static files like images, documents, or other assets.
+
+To start the server, use the command:
+    python run.py --host 127.0.0.1 --port 8080 --debug
+
+This will launch the application using **Uvicorn** with the specified host and port, and it will enable
+FastAPI's debug mode for development purposes.
+
+Usage:
+1. The FastAPI app loads a model during startup using **MLflow** and makes it available for inference via
+   routes.
+2. The application supports **CORS**, session management, and static file serving.
+3. Routes are registered for handling upload tasks, predictions, and error handling.
+
+Modules:
+- **MLflow**: For model management, loading, and inference.
+- **PostgreSQL**: Database connection handling for any necessary storage (not fully defined here).
+- **VaultManager**: For managing secrets (e.g., API keys, database passwords).
+
+Typical Usage:
+    python run.py --host 127.0.0.1 --port 8080 --debug
+    python run.py --init-db --database mydb --schema myschema
+
+This file contains the **app creation logic** that sets up middleware, static file serving, and routes
+for the application. When the app is run using **python run.py**, it starts the **Uvicorn** server with
+the defined settings.
+
+"""
+
+
+
 from fastapi import FastAPI, Request, Depends, APIRouter
 from fastapi.staticfiles import StaticFiles
 
