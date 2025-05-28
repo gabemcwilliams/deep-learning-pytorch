@@ -1,49 +1,104 @@
-from fastapi import HTTPException, APIRouter, Request
-from torchvision import transforms
-from PIL import Image
-from io import BytesIO
-import torch
+from fastapi import FastAPI, Request, Depends, APIRouter
+from fastapi.staticfiles import StaticFiles
+
+from contextlib import asynccontextmanager
+import asyncio
+
+from mlflow.tracking import MlflowClient
+
+from starlette.middleware.sessions import SessionMiddleware
+from fastapi.middleware.cors import CORSMiddleware
+from tensorflow.python.eager.context import async_wait
+
+from .routes.main import router as main_router
+from .routes.errors import router as errors_router
+from .api.v1.upload_routes import router as upload_router
+from .api.v1.predict import router as predict_router
+
+from .utils.database.db import PostgresConnEngine
+from .utils.security.vault_mgr import VaultManager
+
+import loguru
+
+import json
+import os
+
+
+from contextlib import asynccontextmanager
+from fastapi import FastAPI
+import asyncio
 import mlflow
-import base64
+from mlflow.tracking import MlflowClient
 
-router = APIRouter()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    print("Startup: Loading model...")
+    loop = asyncio.get_running_loop()
 
+    client = MlflowClient()
+    model_name = "torch_vit_pizza_steak_sushi"
+    alias = "production"
 
-# Define the transform inline — same as training (ViT-friendly)
-transform = transforms.Compose([
-    transforms.Resize((224, 224)),
-    transforms.ToTensor(),
-    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-])
+    version = client.get_model_version_by_alias(name=model_name, alias=alias)
+    print(f"Model version: {version.version}, Source: {version.source}")
 
+    model_uri = f"models:/{model_name}@{alias}"
+    model = await loop.run_in_executor(None, mlflow.pyfunc.load_model, model_uri)
 
-def predict_model(input_data: dict, request: Request):
-    model = request.app.state.model
+    app.state.model = model
+    print("Model loaded and attached to app.state.model.")
 
-    if "image_base64" not in input_data:
-        raise HTTPException(status_code=400, detail="Missing 'image_base64' in input.")
+    from mlflow.artifacts import download_artifacts
+    file = download_artifacts(run_id=version.run_id, artifact_path="meta/class_labels.json")
 
-    try:
-        # Decode base64 image and convert to RGB
-        image_bytes = base64.b64decode(input_data["image_base64"])
-        image = Image.open(BytesIO(image_bytes)).convert("RGB")
+    print(f'class_labels.json loc: {file}')
 
-        # Apply transform
-        image_tensor = transform(image).unsqueeze(0)
+    with open(file) as f:
+        class_labels = json.loads(f.read())
 
-        # Run inference
-        with torch.no_grad():
-            outputs = model(image_tensor)
-            probs = torch.nn.functional.softmax(outputs, dim=1)
-            pred_class = torch.argmax(probs, dim=1).item()
-            confidence = probs[0][pred_class].item()
+    print(f'class_labels: {class_labels}')
+    app.state.class_labels = class_labels
 
-        return {"class": pred_class, "confidence": confidence}
+    yield  # REQUIRED for FastAPI to continue running
 
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Inference failed: {str(e)}")
+    print("Shutdown: Clean up here if needed")
 
 
-@router.post("/predict")
-async def predict_endpoint(request: Request, input_data: dict):
-    return predict_model(input_data, request)
+def create_app():
+
+    app = FastAPI(
+        title="My ML API",
+        version="1.0.0",
+        docs_url="/docs",
+        redoc_url="/redoc",
+        lifespan=lifespan,
+
+    )
+
+    # CORS setup
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_credentials=False,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+
+    # Mount the 'static' directory to serve static files
+    app.mount("/static", StaticFiles(directory="app/static"), name="static")
+
+    # Middleware for session management (optional)
+    app.add_middleware(SessionMiddleware, secret_key=os.getenv("SECRET_KEY", "supersecret"))
+
+    # Register routes
+    # --- views ---
+    app.include_router(main_router, prefix='')
+
+    # --- api ---
+    app.include_router(upload_router, prefix='/api/v1')
+    app.include_router(predict_router, prefix='/api/v1')
+
+    # --- errors ---
+    app.include_router(errors_router, prefix='/errors')
+
+    return app
