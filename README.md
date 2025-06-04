@@ -1,55 +1,98 @@
-# Deep Learning with PyTorch
+# 🧠 Deep Learning Vision Pipelines with PyTorch, ViT, and FastAPI
 
-This repository contains completed deep learning projects and training experiments using PyTorch. It was built alongside the [**PyTorch for Deep Learning Bootcamp**](https://www.udemy.com/course/pytorch-deep-learning/) by Daniel Bourke and significantly expanded with production-grade features, including modular training scripts, MLflow integration, ONNX export, and FastAPI inference.
+This repository includes complete, production-ready pipelines for image classification using PyTorch. It showcases both
+classic CNN-based modeling and modern transformer-based architectures (ViT), along with integrated deployment via
+FastAPI and a full-stack React + Tailwind frontend.
 
-## ✅ Highlights
+---
 
-* End-to-end CNN pipeline with evaluation, logging, and model saving
-* MLflow experiment tracking with custom run logic
-* ONNX export for portable model inference
-* FastAPI server for real-time predictions
-* Visualizations: loss curves, confusion matrices, and decision boundaries
-* Reusable utilities for training, data loading, and evaluation
-* Loguru-based logging for clean console + file output
+## 📦 Repository Structure
 
-## 📁 Contents
+### `/cnn/`
 
-### `classification/`
+A self-contained project for binary and multiclass classification using PyTorch.
 
-Binary classification and activation experiments on synthetic data.
+- `fashion_mnist_cnn_mlflow.ipynb` — CNN training notebook with full MLflow integration
+- `README.md` — Project-specific details and evaluation metrics
 
-| File                                         | Description                                                             |
-| -------------------------------------------- | ----------------------------------------------------------------------- |
-| `binary_classification_circles_mlflow.ipynb` | Train a simple neural network on 2D circle data. MLflow tracks metrics. |
-| `activations_from_scratch.ipynb`             | Visualizes ReLU, Sigmoid, Tanh from scratch using raw PyTorch ops.      |
-| `decision_boundary.png`                      | Decision boundary of a trained model on synthetic data.                 |
+---
 
-### `cnn_fashionmnist/`
+### `/vit_food_classification/`
 
-Convolutional neural network trained on FashionMNIST, with full tracking and deployment hooks.
+A complete Vision Transformer pipeline for food classification, including training, backend inference, and frontend
+visualization.
 
-| File             | Description                                                                     |
-| ---------------- | ------------------------------------------------------------------------------- |
-| `train.py`       | Modular training script using PyTorch, MLflow, and Loguru.                      |
-| `evaluate.py`    | Evaluation script with confusion matrix, accuracy, and precision/recall output. |
-| `onnx_export.py` | Converts PyTorch model to ONNX format.                                          |
-| `fastapi_infer/` | Minimal FastAPI app for image-based inference using ONNX model.                 |
+#### `backend/`
 
-## 🛠 Tools & Libraries
+FastAPI application for real-time inference and image uploads.
 
-* `PyTorch` – Deep learning model development
-* `MLflow` – Experiment tracking and artifact logging
-* `Loguru` – Structured logging
-* `ONNX` – Model export and cross-framework inference
-* `FastAPI` – Lightweight RESTful inference backend
-* `matplotlib`, `seaborn` – Visualization of results and metrics
+- `app/api/v1/` — API routes (`predict.py`, `upload_routes.py`)
+- `app/services/` — Core services (`img_prep.py`, `predict.py`, `upload_files.py`)
+- `run.py` — Application entry point
+- `main.py` — FastAPI initialization
+- `requirements.txt` — Backend dependencies
 
-## 🎯 Purpose
+#### `frontend/`
 
-This repo is designed to show deep learning readiness with:
+React + Next.js frontend for user interaction and prediction display.
 
-* Fully working training loops (not just notebooks)
-* Reusable code structured for experimentation and reuse
-* Deployment-focused mindset with minimal overhead
+- Tailwind CSS styling and layout
+- Image upload interface with preview and response rendering
+- Clean folder separation under `src/`, `public/`, and config files
 
-Ideal for showcasing applied PyTorch skills in MLOps, edge inference, and production-aligned model development.
+#### `train/`
+
+Complete training pipeline for ViT models.
+
+- `models/vit_model.py` — Vision Transformer architecture
+- `loaders/vit_loader.py` — Dataset loading and transformations
+- `utils/` — Reusable modules:
+    - `loop.py` — Training loop
+    - `experiment.py` — MLflow tracking
+    - `system_metrics.py` — Performance metrics
+- `main.py` — Training orchestrator
+- `requirements.txt` — Training dependencies
+
+#### `source_data/`
+
+- `data_gathering.ipynb` — Data acquisition and preprocessing notebook
+
+---
+
+## ⚙️ Tools & Frameworks
+
+- **PyTorch** — Core deep learning framework
+- **Vision Transformer (ViT)** — State-of-the-art model for image classification
+- **MLflow** — Experiment tracking and model logging
+- **FastAPI** — Lightweight, async-ready inference backend
+- **ONNX** — Model export and serving
+- **Next.js** — React framework for frontend delivery
+- **Tailwind CSS** — Utility-first styling
+- **Loguru** — Simplified structured logging
+- **spaCy** — Used in earlier data filtering steps (optional)
+
+---
+
+## 💡 Features
+
+- Fully modular architecture across training, serving, and UI layers
+- MLflow-powered reproducibility with signature and artifact logging
+- ONNX export path for model portability
+- Secure API design with image upload and prediction routing
+- Intuitive web UI for real-time image classification
+- Readable logs and automated performance tracking
+
+---
+
+## 📊 Example Use Cases
+
+* Food item recognition via uploaded images
+* Edge deployment of transformer-based models with ONNX runtime
+* Educational demos for CNN vs. ViT performance
+* End-to-end ML workflows for vision projects, from data to web deployment
+
+---
+
+This repository demonstrates the full stack of modern deep learning—from model training to live inference with a
+user-facing frontend—all using open-source tooling and portable architecture.
+
