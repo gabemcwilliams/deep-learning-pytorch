@@ -1,26 +1,55 @@
-# Deep Learning with PyTorch (WIP)
+# Deep Learning with PyTorch
 
-This repository contains hands-on experiments and learning notebooks from my deep learning journey using PyTorch. It complements the PyTorch for Deep Learning Bootcamp (Daniel Bourke) and expands with my own implementations, visuals, and MLflow integrations.
+This repository contains completed deep learning projects and training experiments using PyTorch. It was built alongside the [**PyTorch for Deep Learning Bootcamp**](https://www.udemy.com/course/pytorch-deep-learning/) by Daniel Bourke and significantly expanded with production-grade features, including modular training scripts, MLflow integration, ONNX export, and FastAPI inference.
 
-## Contents
+## ✅ Highlights
+
+* End-to-end CNN pipeline with evaluation, logging, and model saving
+* MLflow experiment tracking with custom run logic
+* ONNX export for portable model inference
+* FastAPI server for real-time predictions
+* Visualizations: loss curves, confusion matrices, and decision boundaries
+* Reusable utilities for training, data loading, and evaluation
+* Loguru-based logging for clean console + file output
+
+## 📁 Contents
 
 ### `classification/`
-Binary classification experiments with visualizations, training loops, and MLflow tracking.
 
-- `binary_classification_circles_mlflow.ipynb`: Train a simple neural net on synthetic data (circle pattern) and log metrics to MLflow.
-- `activations_from_scratch.ipynb`: Explore how different activation functions behave and plot them from first principles.
-- `decision_boundary.png`: Decision boundary visualization generated from trained model outputs.
+Binary classification and activation experiments on synthetic data.
 
-## Tools & Libraries
-- `PyTorch` for model development
-- `MLflow` for experiment tracking
-- `matplotlib`, `seaborn` for plotting
-- `loguru` for structured logging
+| File                                         | Description                                                             |
+| -------------------------------------------- | ----------------------------------------------------------------------- |
+| `binary_classification_circles_mlflow.ipynb` | Train a simple neural network on 2D circle data. MLflow tracks metrics. |
+| `activations_from_scratch.ipynb`             | Visualizes ReLU, Sigmoid, Tanh from scratch using raw PyTorch ops.      |
+| `decision_boundary.png`                      | Decision boundary of a trained model on synthetic data.                 |
 
-## Status
-This is an active WIP repo. Additional modules to come:
-- CNNs and vision models
-- Modular training scripts
-- ONNX model export and FastAPI deployment
+### `cnn_fashionmnist/`
 
-Stay tuned.
+Convolutional neural network trained on FashionMNIST, with full tracking and deployment hooks.
+
+| File             | Description                                                                     |
+| ---------------- | ------------------------------------------------------------------------------- |
+| `train.py`       | Modular training script using PyTorch, MLflow, and Loguru.                      |
+| `evaluate.py`    | Evaluation script with confusion matrix, accuracy, and precision/recall output. |
+| `onnx_export.py` | Converts PyTorch model to ONNX format.                                          |
+| `fastapi_infer/` | Minimal FastAPI app for image-based inference using ONNX model.                 |
+
+## 🛠 Tools & Libraries
+
+* `PyTorch` – Deep learning model development
+* `MLflow` – Experiment tracking and artifact logging
+* `Loguru` – Structured logging
+* `ONNX` – Model export and cross-framework inference
+* `FastAPI` – Lightweight RESTful inference backend
+* `matplotlib`, `seaborn` – Visualization of results and metrics
+
+## 🎯 Purpose
+
+This repo is designed to show deep learning readiness with:
+
+* Fully working training loops (not just notebooks)
+* Reusable code structured for experimentation and reuse
+* Deployment-focused mindset with minimal overhead
+
+Ideal for showcasing applied PyTorch skills in MLOps, edge inference, and production-aligned model development.
