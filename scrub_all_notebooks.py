@@ -1,5 +1,36 @@
 import json
 from pathlib import Path
+"""
+scrub_all_notebooks.py
+
+A utility script for recursively scanning and cleaning Jupyter notebooks (.ipynb files) by replacing 
+sensitive or internal terms using a user-defined set of string patterns.
+
+The script performs the following:
+- Loads a dictionary of target→replacement strings from a JSON file.
+- Recursively walks through all notebooks in a specified directory.
+- Replaces matched strings in code cells and their outputs.
+- Overwrites modified notebooks with the scrubbed version.
+
+Typical usage:
+    python scrub_all_notebooks.py --target-dir ./notebooks --pattern-file scrub_patterns.json
+
+Arguments:
+    --target-dir:     Path to the directory to recursively search for notebooks. Defaults to current directory.
+    --pattern-file:   JSON file mapping strings to be replaced. Defaults to "scrub_patterns.json".
+
+Example scrub_patterns.json:
+{
+    "your_company": "ACME Corp",
+    "secret_api_key": "[REDACTED]"
+}
+
+Note:
+- This tool does not back up original notebooks.
+- Only code cells and code outputs are modified.
+"""
+
+
 import argparse
 
 def load_patterns(pattern_file: Path) -> dict:
