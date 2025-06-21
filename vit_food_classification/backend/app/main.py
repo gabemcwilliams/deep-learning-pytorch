@@ -41,8 +41,6 @@ the defined settings.
 
 """
 
-
-
 from fastapi import FastAPI, Request, Depends, APIRouter
 from fastapi.staticfiles import StaticFiles
 
@@ -55,12 +53,9 @@ from starlette.middleware.sessions import SessionMiddleware
 from fastapi.middleware.cors import CORSMiddleware
 from tensorflow.python.eager.context import async_wait
 
-from .routes.main import router as main_router
-from .routes.errors import router as errors_router
 from .api.v1.upload_routes import router as upload_router
 from .api.v1.predict import router as predict_router
 
-from .utils.database.db import PostgresConnEngine
 from .utils.security.vault_mgr import VaultManager
 
 import loguru
@@ -68,12 +63,12 @@ import loguru
 import json
 import os
 
-
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 import asyncio
 import mlflow
 from mlflow.tracking import MlflowClient
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -110,7 +105,6 @@ async def lifespan(app: FastAPI):
 
 
 def create_app():
-
     app = FastAPI(
         title="My ML API",
         version="1.0.0",
@@ -136,14 +130,9 @@ def create_app():
     app.add_middleware(SessionMiddleware, secret_key=os.getenv("SECRET_KEY", "supersecret"))
 
     # Register routes
-    # --- views ---
-    app.include_router(main_router, prefix='')
 
     # --- api ---
     app.include_router(upload_router, prefix='/api/v1')
     app.include_router(predict_router, prefix='/api/v1')
-
-    # --- errors ---
-    app.include_router(errors_router, prefix='/errors')
 
     return app
